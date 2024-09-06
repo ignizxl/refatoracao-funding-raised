@@ -1,4 +1,5 @@
 package com.checkr.interviews;
+
 import java.util.*;
 
 import org.junit.jupiter.api.Test;
@@ -12,18 +13,21 @@ import java.io.IOException;
  * Unit test for simple App.
  */
 
-public class FundingRaisedTest{
+public class FundingRaisedTest {
 
     /**
      * Rigourous Test :-)
      */
+    private static final String CSV_FILE_PATH = "startup_funding.csv";
+
     @Test
     public void testWhereGivenCompany() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("company_name", "Facebook");
-            assertEquals(FundingRaised.where(options).size(), 7);
-        } catch(IOException e) {
+            assertEquals(fundingRaised.where(options).size(), 7);
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -32,10 +36,11 @@ public class FundingRaisedTest{
     @Test
     public void testWhereGivenCity() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("city", "Tempe");
-            assertEquals(FundingRaised.where(options).size(), 3);
-        } catch(IOException e) {
+            assertEquals(fundingRaised.where(options).size(), 3);
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -44,10 +49,11 @@ public class FundingRaisedTest{
     @Test
     public void testWhereGivenState() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("state", "CA");
-            assertEquals(FundingRaised.where(options).size(), 873);
-        } catch(IOException e) {
+            assertEquals(fundingRaised.where(options).size(), 873);
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -56,10 +62,11 @@ public class FundingRaisedTest{
     @Test
     public void testWhereGivenRound() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("round", "a");
-            assertEquals(FundingRaised.where(options).size(), 582);
-        } catch(IOException e) {
+            assertEquals(fundingRaised.where(options).size(), 582);
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -68,11 +75,12 @@ public class FundingRaisedTest{
     @Test
     public void testMultipleOptions() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("round", "a");
             options.put("company_name", "Facebook");
-            assertEquals(FundingRaised.where(options).size(), 1);
-        } catch(IOException e) {
+            assertEquals(fundingRaised.where(options).size(), 1);
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -81,10 +89,11 @@ public class FundingRaisedTest{
     @Test
     public void testWhereNotExists() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("company_name", "NotFacebook");
-            assertEquals(FundingRaised.where(options).size(), 0);
-        } catch(IOException e) {
+            assertEquals(fundingRaised.where(options).size(), 0);
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -93,9 +102,10 @@ public class FundingRaisedTest{
     @Test
     public void testWhereCorrectKeys() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("company_name", "Facebook");
-            Map<String, String> row = FundingRaised.where(options).get(0);
+            Map<String, String> row = fundingRaised.where(options).get(0);
 
             assertEquals(row.get("permalink"), "facebook");
             assertEquals(row.get("company_name"), "Facebook");
@@ -106,7 +116,7 @@ public class FundingRaisedTest{
             assertEquals(row.get("funded_date"), "1-Sep-04");
             assertEquals(row.get("raised_amount"), "500000");
             assertEquals(row.get("round"), "angel");
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -115,9 +125,10 @@ public class FundingRaisedTest{
     @Test
     public void testFindByGivenCompanyName() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("company_name", "Facebook");
-            Map<String, String> row = FundingRaised.findBy(options);
+            Map<String, String> row = fundingRaised.findBy(options);
 
             assertEquals(row.get("permalink"), "facebook");
             assertEquals(row.get("company_name"), "Facebook");
@@ -128,10 +139,10 @@ public class FundingRaisedTest{
             assertEquals(row.get("funded_date"), "1-Sep-04");
             assertEquals(row.get("raised_amount"), "500000");
             assertEquals(row.get("round"), "angel");
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
-        } catch(NoSuchEntryException e) {
+        } catch (NoSuchEntryException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -140,9 +151,10 @@ public class FundingRaisedTest{
     @Test
     public void testFindByGivenState() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("state", "CA");
-            Map<String, String> row = FundingRaised.findBy(options);
+            Map<String, String> row = fundingRaised.findBy(options);
 
             assertEquals(row.get("permalink"), "digg");
             assertEquals(row.get("company_name"), "Digg");
@@ -153,10 +165,10 @@ public class FundingRaisedTest{
             assertEquals(row.get("funded_date"), "1-Dec-06");
             assertEquals(row.get("raised_amount"), "8500000");
             assertEquals(row.get("round"), "b");
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
-        } catch(NoSuchEntryException e) {
+        } catch (NoSuchEntryException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -165,10 +177,11 @@ public class FundingRaisedTest{
     @Test
     public void testFindByMultipleOptions() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("company_name", "Facebook");
             options.put("round", "c");
-            Map<String, String> row = FundingRaised.findBy(options);
+            Map<String, String> row = fundingRaised.findBy(options);
 
             assertEquals(row.get("permalink"), "facebook");
             assertEquals(row.get("company_name"), "Facebook");
@@ -179,10 +192,10 @@ public class FundingRaisedTest{
             assertEquals(row.get("funded_date"), "1-Oct-07");
             assertEquals(row.get("raised_amount"), "300000000");
             assertEquals(row.get("round"), "c");
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
-        } catch(NoSuchEntryException e) {
+        } catch (NoSuchEntryException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
@@ -191,15 +204,17 @@ public class FundingRaisedTest{
     @Test
     public void testFindByNotExists() {
         try {
-            Map<String, String> options = new HashMap<String, String> ();
+            FundingRaised fundingRaised = new FundingRaised(CSV_FILE_PATH);
+            Map<String, String> options = new HashMap<>();
             options.put("company_name", "NotFacebook");
             options.put("round", "c");
-            Map<String, String> row = FundingRaised.findBy(options);
+            Map<String, String> row = fundingRaised.findBy(options);
             fail("findBy should throw exception");
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
-        } catch(NoSuchEntryException e) {
+        } catch (NoSuchEntryException e) {
+            // Exception esperada
         }
     }
 }
